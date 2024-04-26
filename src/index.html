@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>تسک دوره جاوااسکریپت</title>
+    <link rel="stylesheet" href="./styles/index.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+      integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <div class="page-header">
+        <h1 class="page_title">لیست تراکنش ها</h1>
+        <div class="search-box_container hidden">
+          <input type="text" class="search-box" placeholder="جستجو تراکنش.." />
+          <span class="icon-container">
+            <i class="fa fa-search"></i>
+          </span>
+        </div>
+      </div>
+      <section class="page-content">
+        <button class="load-data">بارگذاری تراکنش ها</button>
+        <div class="transaction-list hidden">
+          <h3 class="list_header">لیست تراکنش های شما</h3>
+          <table class="list_data">
+            <thead class="operation_titles">
+              <tr>
+                <th>ردیف</th>
+                <th>نوع تراکنش</th>
+                <th>مبلغ</th>
+                <th>شماره پیگیری</th>
+                <th>تاریخ تراکنش</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="data-number">123</td>
+                <td class="data-type">type</td>
+                <td class="data-price">123,993</td>
+                <td class="data-id">1234309876543456</td>
+                <td class="data-time">12hour</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/axios@1.6.7/dist/axios.min.js"></script>
+    <script type="module" src="./js/index.js"></script>
+  </body>
+</html>
