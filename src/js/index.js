@@ -6,9 +6,9 @@ const bodyTable = document.querySelector(".table-body");
 const sortDate = document.querySelector(".sorting-date");
 const sortPrice = document.querySelector(".sorting-price");
 
-const app = axios.create({
-  baseURL: "http://localhost:3000/transactions",
-});
+// const app = axios.create({
+//   baseURL: "http://localhost:3000/transactions",
+// });
 
 // *events
 let allData = [];
@@ -17,13 +17,16 @@ const filters = {
   price: "ascending",
 };
 loadDataBtn.addEventListener("click", (e) => {
-  app
-    .get("")
-    .then(({ data }) => {
+  fetch("http://localhost:3000/transactions", {
+    method: "GET"
+  })
+    .then((res) => res.json())
+    .then((res) => {
+      // console.log(res);
       loadDataBtn.classList.add("hidden");
       totalList.classList.remove("hidden");
       searchBoxContainer.classList.remove("hidden");
-      allData = data;
+      allData = res;
       domRendering(allData);
     })
     .catch((err) => console.log(err));
@@ -47,10 +50,11 @@ sortDate.addEventListener("click", (e) => {
 
 searchBox.addEventListener("input", (e) => {
   const query = e.target.value;
-  app
-    .get(`?refId_like=${query}`)
+  fetch(`http://localhost:3000/transactions?refId_like=${query}`, { method: "GET" })
+    .then(res=>res.json())
     .then((res) => {
-      //   console.log(URLSearchParams.get())
+      domRendering(res)
+      // console.log(res);
     })
     .catch((err) => console.log(err));
 });
