@@ -186,13 +186,10 @@ td.data-price {
   color: var(--color-error);
 }
 
-.ascending span i{
-  transform: rotate(180deg);
+.asce span i {
+  transform:rotate(180deg);
   transition: all 0.3s linear;
 }
-
-/* .fa-chevron-down{
-} */
 
 .hidden {
   display: none;

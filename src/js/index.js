@@ -13,12 +13,13 @@ const sortPrice = document.querySelector(".sorting-price");
 // *events
 let allData = [];
 const filters = {
-  date: "ascending",
-  price: "ascending",
+  order: "",
+  type: "",
 };
+
 loadDataBtn.addEventListener("click", (e) => {
   fetch("http://localhost:3000/transactions", {
-    method: "GET"
+    method: "GET",
   })
     .then((res) => res.json())
     .then((res) => {
@@ -31,32 +32,36 @@ loadDataBtn.addEventListener("click", (e) => {
     })
     .catch((err) => console.log(err));
 });
-sortDate.addEventListener("click", (e) => {
-  sortDate.classList.toggle("ascending");
-  if (sortDate.classList.contains("ascending")) {
-    domRendering(
-      allData.sort((a, b) => {
-        return new Date(a.date) - new Date(b.date);
-      })
-    );
-  } else {
-    domRendering(
-      allData.sort((a, b) => {
-        return new Date(b.date) - new Date(a.date);
-      })
-    );
-  }
-});
 
 searchBox.addEventListener("input", (e) => {
   const query = e.target.value;
-  fetch(`http://localhost:3000/transactions?refId_like=${query}`, { method: "GET" })
-    .then(res=>res.json())
+  fetch(`http://localhost:3000/transactions?refId_like=${query}`, {
+    method: "GET",
+  })
+    .then((res) => res.json())
     .then((res) => {
-      domRendering(res)
+      domRendering(res);
       // console.log(res);
     })
     .catch((err) => console.log(err));
+});
+
+sortDate.addEventListener("click", (e) => {
+  filters.type = "date";
+  sortDate.classList.contains("asce")
+    ? (filters.order = "asce")
+    : (filters.order = "desc");
+  sortDate.classList.toggle("asce");
+  filteringData(filters);
+});
+
+sortPrice.addEventListener("click", (e) => {
+  filters.type = "price";
+  sortPrice.classList.contains("asce")
+    ? (filters.order = "asce")
+    : (filters.order = "desc");
+  sortPrice.classList.toggle("asce");
+  filteringData(filters);
 });
 
 function domRendering(_data) {
@@ -79,6 +84,31 @@ function domRendering(_data) {
               </tr>`;
   });
   bodyTable.innerHTML = result;
+}
+
+function filteringData(_filters) {
+  const { type, order } = _filters;
+  console.log(type, order);
+  switch (type) {
+    case "price": {
+      fetch(`http://localhost:3000/transactions?_sort=price&_order=${order}`)
+        .then((res) => res.json())
+        .then((data) => {
+          domRendering(data);
+        })
+        .catch((err) => console.log(err.message));
+      break;
+    }
+    case "date": {
+      fetch(`http://localhost:3000/transactions?_sort=date&_order=${order}`)
+        .then((res) => res.json())
+        .then((data) => {
+          domRendering(data);
+        })
+        .catch((err) => console.log(err.message));
+      break;
+    }
+  }
 }
 
 // ? we can also use this function instead of .tolocaleString()
